@@ -8,7 +8,7 @@ from django.http import HttpResponse, JsonResponse
 def weather_info(request):
     if request.method == 'POST':
         city_name = request.POST['city_name']
-        api_key = 'ed5f469571d999d636aaf855d6bca752'  # Replace with your API key
+        api_key = ''  # Replace with your API key
 
         base_url = "http://api.openweathermap.org/data/2.5/weather?"
         city_name = city_name.lower()
