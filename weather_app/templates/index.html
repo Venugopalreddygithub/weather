@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            background-color: #3498db;
+            color: white;
+            padding: 10px;
+        }
+
+        form {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 25px;
+            margin: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button[type="submit"] {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #2189b8;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        #current-time {
+            font-weight: bold;
+        }
+
+        #weather-info {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Weather Information</h1>
+    <p id="current-time">Current Time: {{ current_time }}</p>
+
+    <form method="POST" action="{% url 'weather_info' %}" >
+        {% csrf_token %}
+        <label for="city_name">Enter city name:</label>
+        <input type="text" name="city_name" required>
+        <button type="submit">Get Weather</button>
+    </form>
+    {% if error_message %}
+        <p>{{ error_message }}</p>
+    {% else %}
+        <p>Temperature: {{ temperature }}°K</p>
+        <p>Atmospheric Pressure: {{ pressure }} hPa</p>
+        <p>Humidity: {{ humidity }}%</p>
+        <p>Description: {{ description }}</p>
+        <p>Current Time: {{ current_time }}</p>
+    {% endif %}
+
+
+<script>
+    function updateCurrentTime() {
+        var currentTimeElement = document.getElementById("current-time");
+        var updateTime = function() {
+            var now = new Date();
+            var formattedTime = now.toLocaleString();
+            currentTimeElement.textContent = "Current Time: " + formattedTime;
+        };
+
+        // Initial update
+        updateTime();
+
+        // Update time every second (1000 milliseconds)
+        setInterval(updateTime, 1000);
+    }
+
+    // Call the function to start updating the time
+    updateCurrentTime();
+</script>
+
+</body>
+</html>
